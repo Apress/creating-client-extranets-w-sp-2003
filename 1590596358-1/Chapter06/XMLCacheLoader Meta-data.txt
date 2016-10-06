@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<CacheLoader>
+	<Request>
+		<SQLConnection>user id=Pubs_Test;data source=spsdev;initial catalog=Northwind</SQLConnection>
+		<SQLCommand>SELECT Customers.CompanyName,Orders.OrderID,Products.ProductName,
+			[Order Details].UnitPrice,[Order Details].Quantity,Orders.ShippedDate,
+			[Order Details].Quantity*[Order Details].UnitPrice AS ExtPrice
+			FROM Customers INNER JOIN Orders ON Customers.CustomerID=Orders.CustomerID
+			INNER JOIN [Order Details] ON Orders.OrderID = [Order Details].OrderID
+			INNER JOIN Products ON [Order Details].ProductID = Products.ProductID
+			WHERE (Customers.CustomerID = '[CustomerID]')</SQLCommand>
+		<OutputName>NorthwindOrders</OutputName>
+	</Request>
+	<Request>
+		<SQLConnection>user id=Pubs_Test;data source=spsdev;initial catalog=Northwind</SQLConnection>
+		<SQLCommand>SELECT CompanyName,ContactName,ContactTitle,Address,Phone,Fax
+			FROM Customers
+			WHERE (Customers.CustomerID = '[CustomerID]')</SQLCommand>
+		<OutputName>NorthwindCustomers</OutputName>
+	</Request>
+</CacheLoader>

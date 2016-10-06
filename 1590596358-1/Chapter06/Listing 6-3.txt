@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:output method="html"/>
+<xsl:template match="/">
+
+  <table cellpadding="3">
+    <tbody>
+    <tr> 
+        <td><u>Company Name</u></td>
+        <td><u>Order #</u></td>
+        <td><u>Product Name</u></td>
+        <td><u>Unit Price</u></td>
+        <td><u>Quantity</u></td>
+        <td><u>Ship Date</u></td>
+        <td align="right"><u>Ext Price</u></td>
+    </tr>
+    <xsl:for-each select="Northwind/Orders">
+    <tr>
+        <td><xsl:value-of select="CompanyName"/></td>
+        <td><xsl:value-of select="OrderID"/></td>
+        <td><xsl:value-of select="ProductName"/></td>
+        <td><xsl:value-of select="UnitPrice"/></td>
+        <td><xsl:value-of select="Quantity"/></td>
+        <td><xsl:value-of select="substring(ShippedDate,6,2)"/>/<xsl:value-of select="substring(ShippedDate,9,2)"/>/<xsl:value-of select="substring(ShippedDate,1,4)"/>
+        </td>
+        <td align="right">
+            <xsl:value-of select="format-number(ExtPrice,'$ #,###.00')"/>
+        </td>
+    </tr>
+    </xsl:for-each>
+    <tr>
+        <td colspan="6"></td>
+        <td align="right">----------</td>
+    </tr>
+    <tr>
+        <td colspan="6"></td>
+        <td align="right">
+            <xsl:value-of select="format-number(sum(Northwind/Orders/ExtPrice),'$ #,###.00')"/>
+        </td>
+    </tr>
+    </tbody>
+  </table>
+</xsl:template>
+</xsl:stylesheet>

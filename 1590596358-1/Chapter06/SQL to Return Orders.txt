@@ -1,0 +1,11 @@
+SELECT Customers.CompanyName, Orders.OrderID, Products.ProductName,
+[Order Details].UnitPrice, [Order Details].Quantity,
+Orders.ShippedDate,
+[Order Details].Quantity*[Order Details].UnitPrice AS ExtPrice
+FROM   Customers INNER JOIN Orders
+ON Customers.CustomerID = Orders.CustomerID
+INNER JOIN [Order Details]
+ON Orders.OrderID = [Order Details].OrderID
+INNER JOIN Products
+ON [Order Details].ProductID = Products.ProductID
+WHERE  (Customers.CustomerID = N'QUICK') AND (Orders.OrderID = 10285)

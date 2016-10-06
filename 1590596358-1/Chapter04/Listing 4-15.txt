@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:output method="html"/>
+<xsl:template match="/">
+
+<script language="javascript">
+function toggleRssItem(theParentDiv, resourcePath)
+{
+  var parentId = theParentDiv.id;
+  var childDiv = document.getElementById(parentId + "__child");
+  if (theParentDiv.src.indexOf("collapsePlus.gif") > -1) {
+    theParentDiv.src = resourcePath + "/collapseMinus.gif";
+    childDiv.style.display = "";
+  } else {
+    theParentDiv.src = resourcePath + "/collapsePlus.gif";
+    childDiv.style.display = "none";
+  }
+}
+</script>
+
+<html>
+  <table border="0">
+    <tbody>
+    <tr> 
+      <td colSpan="2">
+        <a href="{rss/channel/link}" target="_news">
+          <strong><xsl:value-of select="rss/channel/title"/></strong>
+        </a>
+         </td>
+    </tr>
+       <xsl:for-each select="rss/channel/item">
+      <tr>
+        <td align="center" width="3%" valign="top">
+           <img id="{link}" onclick="toggleRssItem(this,'http://svcspsstage01/_layouts/images');" alt="Click here to expand/collapse item detail" src="http://svcspsstage01/_layouts/images/collapsePlus.gif" border="0"/>&#160;
+        </td>
+        <td valign="middle">
+          <a href="{link}" target="_news">
+            <xsl:value-of select="title" disable-output-escaping="yes"/>
+          </a>
+          <br/>
+          <div id="{link}__child" style="display:none;border:1px solid
+               #cccccc;padding:2px;background-color:#FFFFCC">
+            <xsl:value-of select="description" disable-output-escaping="yes"/>
+          </div>
+        </td>
+     </tr>
+        </xsl:for-each>
+     <tr>
+       <td colSpan="2">
+         <hr/>last update on: <xsl:value-of select="rss/channel/lastBuildDate"/>
+       </td>
+     </tr>
+   </tbody>
+ </table>
+</html>
+</xsl:template>
+</xsl:stylesheet>
